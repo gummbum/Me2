@@ -79,7 +79,7 @@ class Wall(pygame.sprite.Sprite):
         self.string = str(wallNum)
         self.string2 = str(wallNum2)
         self.name = 'wall800_{}_{}.png'.format(self.string, self.string2)
-        self.layer = layer
+        self._layer = layer
         self.filename = 'data/blocks/' + self.name
         # print(self.filename)
 
