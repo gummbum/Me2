@@ -1,10 +1,20 @@
+import sys
+
+
 def printPlayer(player):
     print(player.name)
 
 def printMap(mapList):
+    write = sys.stdout.write
     height = len(mapList)
     for i in range(0, height):
-        print('{:02d} {}'.format(i, mapList[i]))
+        write('{:02d} ['.format(i))
+        for c in mapList[i]:
+            if c == [0, 0]:
+                write('   ')
+            else:
+                write(' {0[0]:}{0[1]:}'.format(c))
+        write(']\n')
 
 
 def print_X_Line(mapList, Xpos):
