@@ -73,12 +73,14 @@ class Block(pygame.sprite.Sprite):
 
 
 class Wall(pygame.sprite.Sprite):
-    def __init__(self, wallNum, wallNum2):
+    def __init__(self, wallNum, wallNum2, layer):
         pygame.sprite.Sprite.__init__(self)
 
         self.string = str(wallNum)
         self.string2 = str(wallNum2)
-        self.filename = 'data/blocks/wall800_' + self.string + '_' + self.string2 + '.png'
+        self.name = 'wall800_{}_{}.png'.format(self.string, self.string2)
+        self.layer = layer
+        self.filename = 'data/blocks/' + self.name
         # print(self.filename)
 
         self.image = pygame.image.load(os.path.join(self.filename)).convert()

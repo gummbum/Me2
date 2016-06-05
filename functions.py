@@ -4,7 +4,7 @@ def printPlayer(player):
 def printMap(mapList):
     height = len(mapList)
     for i in range(0, height):
-        print(mapList[i])
+        print('{:02d} {}'.format(i, mapList[i]))
 
 
 def print_X_Line(mapList, Xpos):
