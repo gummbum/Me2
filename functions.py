@@ -4,13 +4,23 @@ import sys
 def printPlayer(player):
     print(player.name)
 
-def printMap(mapList):
+def printMap(mapList, player):
     write = sys.stdout.write
+    player_pos = (player.playerY, player.playerX)
     height = len(mapList)
     for i in range(0, height):
         write('{:02d} ['.format(i))
-        for c in mapList[i]:
-            if c == [0, 0]:
+        for j, c in enumerate(mapList[i]):
+            if (i, j) == player_pos:
+                if player.direction == 0:
+                    write(' ^^')
+                elif player.direction == 1:
+                    write(' >>')
+                elif player.direction == 2:
+                    write(' vv')
+                elif player.direction == 3:
+                    write(' <<')
+            elif c == [0, 0]:
                 write('   ')
             else:
                 write(' {0[0]:}{0[1]:}'.format(c))
