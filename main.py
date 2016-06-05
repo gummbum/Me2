@@ -30,44 +30,48 @@ direction = 0
 
 clock = pygame.time.Clock()
 
-wall0 = Wall(0,'a', 0)
-wall1 = Wall(0,'b', 0)
+# Drawing order specified by layer, typically farthest to nearest.
+#        Wall(y, x, layer)
+#        =================
+wall98 = Wall(9, 8, 0)
 
-wall2 = Wall(0,0, 2)
-wall3 = Wall(0,1, 2)
-wall4 = Wall(0,2, 2)
+wall22 = Wall(4, 0, 10)
+wall30 = Wall(4, 8, 10)
+wall23 = Wall(4, 1, 11)
+wall29 = Wall(4, 7, 11)
+wall24 = Wall(4, 2, 12)
+wall28 = Wall(4, 6, 12)
+wall25 = Wall(4, 3, 13)
+wall27 = Wall(4, 5, 13)
+wall26 = Wall(4, 4, 14)
 
-wall5 = Wall(1,0, 3)
-wall6 = Wall(1,1, 3)
-wall7 = Wall(1,2, 3)
-wall8 = Wall(1,3, 3)
-wall9 = Wall(1,4, 3)
+wall15 = Wall(3, 0, 20)
+wall21 = Wall(3, 6, 20)
+wall16 = Wall(3, 1, 21)
+wall20 = Wall(3, 5, 21)
+wall17 = Wall(3, 2, 22)
+wall19 = Wall(3, 4, 22)
+wall18 = Wall(3, 3, 23)
 
-wall10 = Wall(2,0, 4)
-wall11 = Wall(2,1, 4)
-wall12= Wall(2,2, 4)
-wall13= Wall(2,3, 4)
-wall14= Wall(2,4, 4)
+wall10 = Wall(2, 0, 30)
+wall14 = Wall(2, 4, 30)
+wall11 = Wall(2, 1, 31)
+wall13 = Wall(2, 3, 31)
+wall12 = Wall(2, 2, 32)
 
-wall98 = Wall(9,8, 9)
+wall5 = Wall(1, 0, 40)
+wall9 = Wall(1, 4, 40)
+wall6 = Wall(1, 1, 41)
+wall8 = Wall(1, 3, 41)
+wall7 = Wall(1, 2, 42)
 
-wall15 = Wall(3,0, 6)
-wall16 = Wall(3,1, 6)
-wall17 = Wall(3,2, 6)
-wall18 = Wall(3,3, 6)
-wall19 = Wall(3,4, 6)
-wall20 = Wall(3,5, 6)
-wall21 = Wall(3,6, 6)
+wall2 = Wall(0, 0, 50)
+wall4 = Wall(0, 2, 50)
+wall0 = Wall(0, 'a', 51)
+wall1 = Wall(0, 'b', 51)
+wall3 = Wall(0, 1, 52)
 
-wall22 = Wall(4,0, 7)
-wall23 = Wall(4,1, 7)
-wall24 = Wall(4,2, 7)
-wall25 = Wall(4,3, 7)
-wall26 = Wall(4,4, 7)
-wall27 = Wall(4,5, 7)
-wall28 = Wall(4,6, 7)
-wall29 = Wall(4,7, 7)
-wall30 = Wall(4,8, 7)
+
 
 
 
@@ -101,6 +105,8 @@ wallVisL5Group = pygame.sprite.Group()
 wallVisL6Group = pygame.sprite.Group()
 wallGroup = pygame.sprite.Group()
 
+allSprites = pygame.sprite.LayeredUpdates()
+
 def emptyVisGroups():
     wallVisL0Group.empty()
     wallVisL1Group.empty()
@@ -109,10 +115,6 @@ def emptyVisGroups():
     wallVisL4Group.empty()
     wallVisL5Group.empty()
     wallVisL6Group.empty()
-
-
-def sortkey(wall):
-    return wall.name
 
 
 backGroup.add(blackBlock)
@@ -152,14 +154,14 @@ while running:
         # X and Y values are swapped
         userMap2[player.oldPlayerY][player.oldPlayerX][1] = 0
         userMap2[player.playerY][player.playerX][1] = 8
-        printMap(userMap2)
+        # printMap(userMap2)
 
         # movement = 0
         # Wall visible drawing loop
         emptyVisGroups()
         drawWalls = drawWallsfunction(player, userMap2)
 
-        printMap(userMap2)
+        printMap(userMap2, player)
         print("Draw walls ",drawWalls)
         #testList.reverse()
 
@@ -186,11 +188,12 @@ while running:
 
     backGroup.draw(screen)
     monsterGroup.draw(screen)
-    # allSprites = pygame.sprite.OrderedUpdates()
-    allSprites = pygame.sprite.LayeredUpdates(
+    allSprites.empty()
+    allSprites.add(
         wallVisL6Group, wallVisL5Group, wallVisL4Group, wallVisL3Group,
         wallVisL2Group, wallVisL1Group, wallVisL0Group)
     if movement == 1:
+        print('Selected wall sprites in drawing order:')
         for s in allSprites:
             print(s.name)
 
